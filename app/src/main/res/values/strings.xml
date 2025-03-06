@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">QuizzApp</string>
+    <string name="app_name">My first Android App</string>
+    <string name="question_text"> What country does this flag belong to?</string>
+    <string name="quiz_progress_text">%1$d / %2$d</string>
+    <string name="option">Option</string>
+    <string name="submit_text">Submit</string>
 </resources>

@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
     private var tvOptionFour:TextView? = null
     private var btnSubmit:Button? = null
 
+    private var mQuestionsList: ArrayList<Question>? = null
+    private var mCurrentPosition: Int = 1
+    private var mSelectedOptionPosition: Int = 0
+    private var mCorrectAnswers: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        mQuestionsList = Constants.myQuestionsList
 
         tvQuestion = findViewById(R.id.tv_question)
         iv1 = findViewById(R.id.iv1)
@@ -42,6 +48,37 @@ class MainActivity : AppCompatActivity() {
         tvOptionFour = findViewById(R.id.tv_option_four)
         btnSubmit = findViewById(R.id.btn_submit)
 
+        tvOptionOne?.setOnClickListener{}
+        tvOptionTwo?.setOnClickListener{}
+        tvOptionThree?.setOnClickListener{}
+        tvOptionFour?.setOnClickListener{}
+        btnSubmit?.setOnClickListener{}
+
+        setQuestion()
 
     }
+
+    private fun setQuestion() {
+        // Todo: call defaultOptionsTextView()
+
+        val question: Question = mQuestionsList!![mCurrentPosition - 1]
+
+        iv1?.setImageResource(question.image)
+
+        pbQuizProgress?.progress = mCurrentPosition
+
+        tvQuizProgress?.text = "$mCurrentPosition/${pbQuizProgress?.max}"
+
+        tvOptionOne?.text = question.optionOne
+        tvOptionTwo?.text = question.optionTwo
+        tvOptionThree?.text = question.optionThree
+        tvOptionFour?.text = question.optionFour
+
+        if(mCurrentPosition == mQuestionsList!!.size){
+            btnSubmit?.text="Finish"
+        } else {
+            btnSubmit?.text="Submit"
+        }
+    }
+
 }

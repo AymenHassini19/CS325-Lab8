@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setQuestion() {
-        // Todo: call defaultOptionsTextView()
+
+        defaultOptionsTextView()
 
         val question: Question = mQuestionsList!![mCurrentPosition - 1]
 
@@ -85,10 +86,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selectedOptionView(tv: TextView, selectedOptionNum: Int) {
+
+        defaultOptionsTextView()
         mSelectedOptionPosition = selectedOptionNum
         tv.setTextColor(Color.parseColor("#363A43"))
         tv.setTypeface(tv.typeface, Typeface.BOLD)
         tv.setBackgroundResource(R.drawable.selected_option_border_bg)
+    }
+
+    private fun defaultOptionsTextView(){
+        val options = ArrayList<TextView>()
+        tvOptionOne?.let { options.add(it) }
+        tvOptionTwo?.let { options.add(it) }
+        tvOptionThree?.let { options.add(it) }
+        tvOptionFour?.let { options.add(it) }
+        for (option in options) {
+            option.setTextColor(Color.parseColor("#7A8089"))
+            option.typeface = Typeface.DEFAULT
+            option.setBackgroundResource(R.drawable.default_option_border_bg)
+        }
+
     }
 
 }

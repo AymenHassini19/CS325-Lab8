@@ -2,6 +2,9 @@ package com.example.quizzapp
 
 object Constants {
 
+    const val CORRECT_ANS = "correct_answers"
+    const val TOTAL_QUESTIONS = "total_questions"
+
     var myQuestionsList: ArrayList<Question> = arrayListOf(
         Question(
             1,

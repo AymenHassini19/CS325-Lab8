@@ -1,5 +1,6 @@
 package com.example.quizzapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -50,11 +51,43 @@ class MainActivity : AppCompatActivity() {
         tvOptionFour = findViewById(R.id.tv_option_four)
         btnSubmit = findViewById(R.id.btn_submit)
 
-        tvOptionOne?.setOnClickListener { selectedOptionView(it as TextView, 1)}
-        tvOptionTwo?.setOnClickListener {selectedOptionView(it as TextView, 2)}
-        tvOptionThree?.setOnClickListener {selectedOptionView(it as TextView, 3)}
-        tvOptionFour?.setOnClickListener {selectedOptionView(it as TextView, 4)}
-        btnSubmit?.setOnClickListener {}
+        tvOptionOne?.setOnClickListener { selectedOptionView(it as TextView, 1) }
+        tvOptionTwo?.setOnClickListener { selectedOptionView(it as TextView, 2) }
+        tvOptionThree?.setOnClickListener { selectedOptionView(it as TextView, 3) }
+        tvOptionFour?.setOnClickListener { selectedOptionView(it as TextView, 4) }
+        btnSubmit?.setOnClickListener {
+            if (mSelectedOptionPosition == 0) {
+                mCurrentPosition++
+                if (mCurrentPosition <= mQuestionsList!!.size) {
+                    setQuestion()
+                } else {
+                    val intent = Intent(this, ResultActivity::class.java).apply {
+                        putExtra(Constants.CORRECT_ANS, mCorrectAnswers)
+                        putExtra(Constants.TOTAL_QUESTIONS, mQuestionsList?.size)
+                    }
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                val question = mQuestionsList!![mCurrentPosition - 1]
+                if (question.correctAnswer != mSelectedOptionPosition) {
+                    answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                } else {
+                    mCorrectAnswers++
+                }
+                answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+
+                if (mCurrentPosition == mQuestionsList!!.size) {
+                    btnSubmit?.text = getString(R.string.finish)
+                } else {
+                    btnSubmit?.text = "Next Question"
+                }
+
+                mSelectedOptionPosition = 0
+
+            }
+        }
+
 
         setQuestion()
 
@@ -94,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         tv.setBackgroundResource(R.drawable.selected_option_border_bg)
     }
 
-    private fun defaultOptionsTextView(){
+    private fun defaultOptionsTextView() {
         val options = ArrayList<TextView>()
         tvOptionOne?.let { options.add(it) }
         tvOptionTwo?.let { options.add(it) }
@@ -107,5 +140,15 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun answerView(selectedOptionNum: Int, drawableRes: Int) {
+        when (selectedOptionNum) {
+            1 -> tvOptionOne?.setBackgroundResource(drawableRes)
+            2 -> tvOptionTwo?.setBackgroundResource(drawableRes)
+            3 -> tvOptionThree?.setBackgroundResource(drawableRes)
+            4 -> tvOptionFour?.setBackgroundResource(drawableRes)
+        }
+    }
+
 
 }

@@ -78,9 +78,9 @@ class MainActivity : AppCompatActivity() {
         tvOptionFour?.text = question.optionFour
 
         if (mCurrentPosition == mQuestionsList!!.size) {
-            btnSubmit?.text = "Finish"
+            btnSubmit?.text = getString(R.string.finish)
         } else {
-            btnSubmit?.text = "Submit"
+            btnSubmit?.text = getString(R.string.submit)
         }
 
     }

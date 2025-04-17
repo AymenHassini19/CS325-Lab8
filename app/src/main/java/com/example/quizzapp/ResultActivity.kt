@@ -1,6 +1,8 @@
 package com.example.quizzapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +17,18 @@ class ResultActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val tvScore: TextView = findViewById(R.id.tv_score)
+        val btnFinish: TextView = findViewById(R.id.btn_finish)
+
+        val totalQuestions = intent.getIntExtra(Constants.TOTAL_QUESTIONS, 0)
+        val correctAnswers = intent.getIntExtra(Constants.CORRECT_ANS, 0)
+
+        tvScore.text = "Your score is $correctAnswers out of $totalQuestions"
+
+        btnFinish.setOnClickListener() {
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }

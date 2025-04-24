@@ -34,6 +34,7 @@ class WelcomeActivity : AppCompatActivity() {
                     MainActivity::class.java
                 )
             )
+            finish()
         }
 
         val mediaPlayer = MediaPlayer.create(this, R.raw.start_audio)
